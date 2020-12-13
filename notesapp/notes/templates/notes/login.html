@@ -1,0 +1,24 @@
+{% extends 'notes/base.html' %} {% load crispy_forms_tags %} {% block content%}
+<div class="row justify-content-center">
+  <form method="POST" class="border border-white p-2 mt-5" style="width: 60%">
+    <h1 class="text-center">Discover PAgenda</h1>
+    {% csrf_token %} 
+    {{ form.username|as_crispy_field }} 
+    {{ form.password|as_crispy_field }}
+    <button type="submit" class="btn btn-primary btn-lg btn-block">
+      Login
+    </button>
+    <hr class="bg-white" />
+  </form>
+</div>
+<div class="row justify-content-center mt-2">
+  <a href="{% url 'signup' %}" class="h5 text-success font-weight-bold"
+    >Create account?</a
+  >
+</div>
+<div class="row justify-content-center mt-2">
+  <a href="{% url 'password_reset' %}" class="h5 text-danger font-weight-bold"
+    >Forgotten Password?</a
+  >
+</div>
+{% endblock %}

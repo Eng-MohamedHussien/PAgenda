@@ -1,0 +1,12 @@
+{% extends 'notes/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content%}
+    <form method="POST" class="border border-white p-2 m-2">
+        <h1 class="text-center">{{ subTitle }}</h1>
+        {% csrf_token %}
+        {{ form.note_title|as_crispy_field }}
+        {{ form.note_content|as_crispy_field }}
+        <button type="submit" class="btn btn-success btn-lg btn-block">Save</button>
+    </form>
+{% endblock %}

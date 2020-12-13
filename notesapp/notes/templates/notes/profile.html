@@ -1,0 +1,75 @@
+{% extends 'notes/base.html' %} {% block content%} {% load crispy_forms_tags %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+  <a class="navbar-brand" href="#"> PAgenda </a>
+
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarNavAltMarkup"
+    aria-controls="navbarNavAltMarkup"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div
+    class="collapse navbar-collapse justify-content-end"
+    id="navbarNavAltMarkup"
+  >
+    <div class="navbar-nav">
+      <a href="{% url 'add_note' user.id %}" class="btn btn-primary"
+        >Add Note</a
+      >
+      <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+    </div>
+  </div>
+</nav>
+<div>
+  <h4 class="d-flex justify-content-center text-primary p-2" style="margin: auto;">Welcome, {{ user.username }} </h4>
+  <div class="row justify-content-center m-2">
+    <div class="col-md-auto">
+      <form method="GET" action="{% url 'filter_date' user.id %}">
+        <span class="text-dark pr-1 font-weight-bold" style="font-size: 1.3rem">Sort By</span>
+        {{ form.selected_choice }}
+        <input
+          type="submit"
+          value="Apply"
+          class="btn btn-success text-center ml-1"
+          style="width: 5rem; height: 2.2rem"
+        />
+      </form>
+    </div>
+  </div>
+</div>
+<div class="d-flex flex-wrap justify-content-around">
+  {% for note in notes %}
+  <div class="card p-2 m-2" style="width: 18rem">
+    <div class="card-body">
+      <h5 class="card-title text-center">{{ note.note_title }}</h5>
+      {% if note.modified_at > note.created_at %}
+      <h6 class="card-subtitle mb-2 text-muted text-center">
+        Modified at {{ note.modified_at }} by {{ note.author }}
+      </h6>
+      {% else %}
+      <h6 class="card-subtitle mb-2 text-muted text-center">
+        Created at {{ note.created_at }} by {{ note.author }}
+      </h6>
+      {% endif %}
+      <div class="card-text p-2">{{ note.note_html|safe }}</div>
+      <div class="d-flex justify-content-around">
+        <a
+          href="{% url 'update_note' user.id note.id %}"
+          class="btn btn-warning"
+          >Update</a
+        >
+        <a href="{% url 'delete_note' user.id note.id %}" class="btn btn-danger"
+          >Delete</a
+        >
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

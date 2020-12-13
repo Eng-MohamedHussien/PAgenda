@@ -1,0 +1,20 @@
+{% extends 'notes/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content%}
+    <div class="row justify-content-center">
+        <form method="POST" class="border border-white p-2 mt-5" style="width: 80%;">
+            <h1 class="text-center">Join us</h1>
+            {% csrf_token %}
+            {{ form.username|as_crispy_field }}
+            {{ form.email|as_crispy_field }}
+            {{ form.password1|as_crispy_field }}
+            {{ form.password2|as_crispy_field }}
+            <button type="submit" class="btn btn-success btn-lg btn-block">Signup</button>
+            <hr class="bg-dark">
+        </form>
+    </div>
+    <div class="row justify-content-center mt-2">
+        <a href="{% url 'login' %}" class="h5 text-primary font-weight-bold">Already Have account?</a>
+    </div>
+{% endblock %}
